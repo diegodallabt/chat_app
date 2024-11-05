@@ -1,10 +1,10 @@
-// lib/app/modules/login/presentation/pages/login_page.dart
-
 import 'package:chat_app/app/modules/login/presentation/bloc/login_event.dart';
+import 'package:chat_app/app/modules/login/presentation/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 import 'bloc/login_bloc.dart';
 import 'bloc/login_state.dart';
+import 'widgets/login_button.dart';
 
 class LoginPage extends StatefulWidget {
   final LoginBloc loginBloc;
@@ -45,44 +45,76 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 16),
-            StreamBuilder<LoginState>(
-              stream: widget.loginBloc.state,
-              initialData: LoginInitial(),
-              builder: (context, snapshot) {
-                if (snapshot.data is LoginLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+      backgroundColor: const Color.fromARGB(255, 54, 54, 54),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Flutter Chat",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+              const SizedBox(height: 26),
+              CustomTextField(
+                controller: emailController,
+                labelText: 'E-mail',
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                controller: passwordController,
+                labelText: 'Password',
+                isPassword: true,
+              ),
+              const SizedBox(height: 16),
+              StreamBuilder<LoginState>(
+                stream: widget.loginBloc.state,
+                initialData: LoginInitial(),
+                builder: (context, snapshot) {
+                  final isLoading = snapshot.data is LoginLoading;
 
-                return ElevatedButton(
-                  onPressed: () {
-                    final email = emailController.text;
-                    final password = passwordController.text;
+                  return SizedBox(
+                    width: double.infinity,
+                    child: LoginButton(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      onPressed: () {
+                        final email = emailController.text;
+                        final password = passwordController.text;
 
-                    widget.loginBloc.eventSink.add(SubmitButtonPressed(
-                      email: email,
-                      password: password,
-                    ));
-                  },
-                  child: const Text('Login'),
-                );
-              },
-            ),
-          ],
+                        widget.loginBloc.eventSink.add(SubmitButtonPressed(
+                          email: email,
+                          password: password,
+                        ));
+                      },
+                      isLoading: isLoading,
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 5),
+              SizedBox(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Não possui uma conta? ',
+                        style: TextStyle(color: Colors.white)),
+                    InkWell(
+                      child: const Text('Cadastre-se',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700)),
+                      onTap: () {},
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
