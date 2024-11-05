@@ -1,16 +1,11 @@
-# chat_app
+# Chat com WebSocket em Flutter
+Esse projeto se trata da implementação de um chat mobile em Flutter que usa WebSockets para comunicação, Firebase como banco de dados para armazenar informações e realizar autenticação de usuários, Clean Archtecture como arquitetura do projeto, BloC para o gerenciamento de estados e Design Patterns para garantir a escalabilidade e manutenabilidade do código.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Features
+- Login
+- Cadastro de usuário
+- Criar chat com um usuário
+- Visualizar perfil
+- Excluir conta
+- Alterar informações da conta
+- Enviar mensagens (texto, áudio, vídeo, imagem, localização)
