@@ -17,3 +17,9 @@ class LoginFailure extends LoginState {
 
   LoginFailure({required this.error});
 }
+
+class TabChangedState extends LoginState {
+  final bool isLoginSelected;
+
+  TabChangedState({required this.isLoginSelected});
+}

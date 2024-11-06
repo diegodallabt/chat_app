@@ -10,8 +10,9 @@ class LoginBloc {
   final _stateController = StreamController<LoginState>.broadcast();
 
   Stream<LoginState> get state => _stateController.stream;
-
   Sink<LoginEvent> get eventSink => _eventController.sink;
+
+  bool isLoginSelected = true;
 
   LoginBloc({required this.loginUseCase}) {
     _eventController.stream.listen(_mapEventToState);
@@ -23,11 +24,13 @@ class LoginBloc {
 
       try {
         final user = await loginUseCase.login(event.email, event.password);
-
         _stateController.add(LoginSuccess(user: user!));
       } catch (e) {
         _stateController.add(LoginFailure(error: e.toString()));
       }
+    } else if (event is ToggleTab) {
+      isLoginSelected = event.isLoginSelected;
+      _stateController.add(TabChangedState(isLoginSelected: isLoginSelected));
     }
   }
 

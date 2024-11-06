@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoginButton extends StatelessWidget {
+class RegisterButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isLoading;
   final Color backgroundColor;
   final Color textColor;
   final EdgeInsets? padding;
 
-  const LoginButton({
+  const RegisterButton({
     super.key,
     required this.onPressed,
     this.isLoading = false,
@@ -31,7 +31,7 @@ class LoginButton extends StatelessWidget {
               ),
             ),
             child: const Text(
-              'Entrar',
+              'Cadastrar',
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
           );
