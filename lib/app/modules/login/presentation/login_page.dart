@@ -16,8 +16,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailLoginController = TextEditingController();
+  final TextEditingController emailRegisterController = TextEditingController();
+  final TextEditingController passwordLoginController = TextEditingController();
+  final TextEditingController passwordRegisterController =
+      TextEditingController();
   final PageController _pageController = PageController();
 
   bool isLoginSelected = true;
@@ -39,8 +42,10 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    emailLoginController.dispose();
+    passwordLoginController.dispose();
+    emailRegisterController.dispose();
+    passwordRegisterController.dispose();
     widget.loginBloc.dispose();
     _pageController.dispose();
     super.dispose();
@@ -171,12 +176,12 @@ class LoginPageState extends State<LoginPage> {
         ),
         const SizedBox(height: 26),
         CustomTextField(
-          controller: emailController,
+          controller: emailLoginController,
           labelText: 'E-mail',
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          controller: passwordController,
+          controller: passwordLoginController,
           labelText: 'Senha',
           isPassword: true,
         ),
@@ -193,8 +198,8 @@ class LoginPageState extends State<LoginPage> {
                 backgroundColor: const Color.fromARGB(255, 44, 192, 163),
                 padding: const EdgeInsets.symmetric(vertical: 17.0),
                 onPressed: () {
-                  final email = emailController.text;
-                  final password = passwordController.text;
+                  final email = emailLoginController.text;
+                  final password = passwordLoginController.text;
 
                   widget.loginBloc.eventSink.add(SubmitButtonPressed(
                     email: email,
@@ -232,12 +237,12 @@ class LoginPageState extends State<LoginPage> {
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          controller: emailController,
+          controller: emailRegisterController,
           labelText: 'E-mail',
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          controller: passwordController,
+          controller: passwordRegisterController,
           labelText: 'Senha',
           isPassword: true,
         ),
