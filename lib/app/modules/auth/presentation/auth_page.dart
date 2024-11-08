@@ -1,21 +1,21 @@
-import 'package:chat_app/app/modules/login/presentation/bloc/login_event.dart';
-import 'package:chat_app/app/modules/login/presentation/widgets/custom_textfield.dart';
+import 'package:chat_app/app/modules/auth/presentation/bloc/auth_event.dart';
+import 'package:chat_app/app/modules/auth/presentation/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
-import 'bloc/login_bloc.dart';
-import 'bloc/login_state.dart';
+import 'bloc/auth_bloc.dart';
+import 'bloc/auth_state.dart';
 import 'widgets/login_button.dart';
 import 'widgets/register_button.dart';
 
-class LoginPage extends StatefulWidget {
-  final LoginBloc loginBloc;
+class AuthPage extends StatefulWidget {
+  final AuthBloc loginBloc;
 
-  const LoginPage({super.key, required this.loginBloc});
+  const AuthPage({super.key, required this.loginBloc});
 
   @override
-  LoginPageState createState() => LoginPageState();
+  AuthPageState createState() => AuthPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class AuthPageState extends State<AuthPage> {
   final TextEditingController emailLoginController = TextEditingController();
   final TextEditingController emailRegisterController = TextEditingController();
   final TextEditingController passwordLoginController = TextEditingController();
@@ -30,10 +30,10 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
 
     widget.loginBloc.state.listen((state) {
-      if (state is LoginSuccess) {
+      if (state is AuthSuccess) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Login Successful!')));
-      } else if (state is LoginFailure) {
+      } else if (state is AuthFailure) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(state.error)));
       }
@@ -186,11 +186,11 @@ class LoginPageState extends State<LoginPage> {
           isPassword: true,
         ),
         const SizedBox(height: 16),
-        StreamBuilder<LoginState>(
+        StreamBuilder<AuthState>(
           stream: widget.loginBloc.state,
-          initialData: LoginInitial(),
+          initialData: AuthInitial(),
           builder: (context, snapshot) {
-            final isLoading = snapshot.data is LoginLoading;
+            final isLoading = snapshot.data is AuthLoading;
 
             return SizedBox(
               width: double.infinity,

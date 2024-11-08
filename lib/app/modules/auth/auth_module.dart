@@ -7,10 +7,10 @@ import 'domain/repositories/firebase_auth_repository.dart';
 import 'domain/usecases/firebase_auth_usecase.dart';
 import 'domain/usecases/firebase_auth_usecase_impl.dart';
 import 'external/datasources/firebase_auth_datasource_impl.dart';
-import 'presentation/bloc/login_bloc.dart';
-import 'presentation/login_page.dart';
+import 'presentation/bloc/auth_bloc.dart';
+import 'presentation/auth_page.dart';
 
-class LoginModule extends Module {
+class AuthModule extends Module {
   @override
   void binds(Injector i) {
     // FirebaseAuth instance
@@ -32,8 +32,8 @@ class LoginModule extends Module {
     );
 
     // Login BloC
-    i.addSingleton<LoginBloc>(
-      () => LoginBloc(loginUseCase: i.get<FirebaseAuthUseCase>()),
+    i.addSingleton<AuthBloc>(
+      () => AuthBloc(authUseCase: i.get<FirebaseAuthUseCase>()),
     );
   }
 
@@ -48,8 +48,8 @@ class LoginModule extends Module {
 
     r.child(
       '/',
-      child: (context) => LoginPage(
-        loginBloc: context.read<LoginBloc>(),
+      child: (context) => AuthPage(
+        loginBloc: context.read<AuthBloc>(),
       ),
       customTransition: instantTransition,
     );
