@@ -18,10 +18,10 @@ class AuthPage extends StatefulWidget {
 class AuthPageState extends State<AuthPage> {
   final TextEditingController emailLoginController = TextEditingController();
   final TextEditingController emailRegisterController = TextEditingController();
+  final TextEditingController nameRegisterController = TextEditingController();
   final TextEditingController passwordLoginController = TextEditingController();
   final TextEditingController passwordRegisterController =
       TextEditingController();
-  final TextEditingController nameRegisterController = TextEditingController();
   final PageController _pageController = PageController();
 
   bool isLoginSelected = true;
@@ -53,6 +53,7 @@ class AuthPageState extends State<AuthPage> {
   void dispose() {
     emailLoginController.dispose();
     passwordLoginController.dispose();
+    nameRegisterController.dispose();
     emailRegisterController.dispose();
     passwordRegisterController.dispose();
     widget.authBloc.dispose();
@@ -60,10 +61,25 @@ class AuthPageState extends State<AuthPage> {
     super.dispose();
   }
 
+  void _clearControllerText(List<TextEditingController> controllers) {
+    for (var controller in controllers) {
+      controller.text = '';
+    }
+  }
+
   void _toggleTab(bool isLogin) {
     setState(() {
       isLoginSelected = isLogin;
     });
+
+    _clearControllerText([
+      emailLoginController,
+      passwordLoginController,
+      nameRegisterController,
+      emailRegisterController,
+      passwordRegisterController,
+    ]);
+
     _pageController.animateToPage(
       isLogin ? 0 : 1,
       duration: const Duration(milliseconds: 300),
@@ -268,9 +284,9 @@ class AuthPageState extends State<AuthPage> {
                 backgroundColor: const Color.fromARGB(255, 44, 192, 163),
                 padding: const EdgeInsets.symmetric(vertical: 17.0),
                 onPressed: () {
+                  final name = nameRegisterController.text;
                   final email = emailRegisterController.text;
                   final password = passwordRegisterController.text;
-                  final name = nameRegisterController.text;
 
                   widget.authBloc.eventSink.add(RegisterButtonPressed(
                       email: email, password: password, name: name));
