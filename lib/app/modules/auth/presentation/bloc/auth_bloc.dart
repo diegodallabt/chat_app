@@ -19,11 +19,20 @@ class AuthBloc {
   }
 
   void _mapEventToState(AuthEvent event) async {
-    if (event is SubmitButtonPressed) {
+    if (event is LoginButtonPressed) {
       _stateController.add(AuthLoading());
 
       try {
         final user = await authUseCase.login(event.email, event.password);
+        _stateController.add(AuthSuccess(user: user!));
+      } catch (e) {
+        _stateController.add(AuthFailure(error: e.toString()));
+      }
+    } else if (event is RegisterButtonPressed) {
+      _stateController.add(AuthLoading());
+
+      try {
+        final user = await authUseCase.register(event.email, event.password);
         _stateController.add(AuthSuccess(user: user!));
       } catch (e) {
         _stateController.add(AuthFailure(error: e.toString()));

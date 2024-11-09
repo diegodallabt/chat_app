@@ -201,7 +201,7 @@ class AuthPageState extends State<AuthPage> {
                   final email = emailLoginController.text;
                   final password = passwordLoginController.text;
 
-                  widget.loginBloc.eventSink.add(SubmitButtonPressed(
+                  widget.loginBloc.eventSink.add(LoginButtonPressed(
                     email: email,
                     password: password,
                   ));

@@ -19,19 +19,19 @@ class FirebaseAuthUseCaseImpl implements FirebaseAuthUseCase {
   }
 
   @override
-  Future<void> logout() async {
+  Future<User?> register(String email, String password) async {
     try {
-      await _firebaseAuthRepository.logout();
+      final user = await _firebaseAuthRepository.register(email, password);
+      return user;
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<User?> getUser() async {
+  Future<void> logout() async {
     try {
-      final user = _firebaseAuthRepository.getUser();
-      return user;
+      await _firebaseAuthRepository.logout();
     } catch (e) {
       rethrow;
     }

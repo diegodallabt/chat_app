@@ -22,8 +22,9 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   @override
   Future<User?> register(String email, String password) async {
     try {
-      final user = await _firebaseAuthDataSource.createUserWithEmailAndPassword(
+      final user = await _firebaseAuthDataSource.signInWithEmailAndPassword(
           email, password);
+
       return user;
     } catch (e) {
       rethrow;
@@ -34,16 +35,6 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   Future<void> logout() async {
     try {
       await _firebaseAuthDataSource.signOut();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<User?> getUser() async {
-    try {
-      final user = _firebaseAuthDataSource.currentUser;
-      return user;
     } catch (e) {
       rethrow;
     }

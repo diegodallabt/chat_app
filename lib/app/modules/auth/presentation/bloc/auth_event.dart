@@ -1,10 +1,17 @@
 abstract class AuthEvent {}
 
-class SubmitButtonPressed extends AuthEvent {
+class LoginButtonPressed extends AuthEvent {
   final String email;
   final String password;
 
-  SubmitButtonPressed({required this.email, required this.password});
+  LoginButtonPressed({required this.email, required this.password});
+}
+
+class RegisterButtonPressed extends AuthEvent {
+  final String email;
+  final String password;
+
+  RegisterButtonPressed({required this.email, required this.password});
 }
 
 class ToggleTab extends AuthEvent {
