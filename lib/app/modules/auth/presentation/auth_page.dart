@@ -37,6 +37,7 @@ class AuthPageState extends State<AuthPage> {
           backgroundColor: Colors.green,
         ));
       } else if (state is AuthRegisterSuccess) {
+        _toggleTab(true);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Register Successful!'),
           backgroundColor: Colors.blue,
@@ -255,20 +256,29 @@ class AuthPageState extends State<AuthPage> {
           isPassword: true,
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          width: double.infinity,
-          child: RegisterButton(
-            backgroundColor: const Color.fromARGB(255, 44, 192, 163),
-            padding: const EdgeInsets.symmetric(vertical: 17.0),
-            onPressed: () {
-              final email = emailRegisterController.text;
-              final password = passwordRegisterController.text;
-              final name = nameRegisterController.text;
+        StreamBuilder<AuthState>(
+          stream: widget.authBloc.state,
+          initialData: AuthInitial(),
+          builder: (context, snapshot) {
+            final isLoading = snapshot.data is AuthLoading;
 
-              widget.authBloc.eventSink.add(RegisterButtonPressed(
-                  email: email, password: password, name: name));
-            },
-          ),
+            return SizedBox(
+              width: double.infinity,
+              child: RegisterButton(
+                backgroundColor: const Color.fromARGB(255, 44, 192, 163),
+                padding: const EdgeInsets.symmetric(vertical: 17.0),
+                onPressed: () {
+                  final email = emailRegisterController.text;
+                  final password = passwordRegisterController.text;
+                  final name = nameRegisterController.text;
+
+                  widget.authBloc.eventSink.add(RegisterButtonPressed(
+                      email: email, password: password, name: name));
+                },
+                isLoading: isLoading,
+              ),
+            );
+          },
         ),
       ],
     );

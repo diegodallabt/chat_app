@@ -18,22 +18,29 @@ class RegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : ElevatedButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-              padding: padding,
-              backgroundColor: backgroundColor,
-              foregroundColor: textColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4.0),
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: padding,
+        backgroundColor: backgroundColor,
+        foregroundColor: textColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+      ),
+      child: isLoading
+          ? const SizedBox(
+              width: 30.0,
+              height: 30.0,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 3,
               ),
-            ),
-            child: const Text(
+            )
+          : const Text(
               'Cadastrar',
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
-          );
+    );
   }
 }
