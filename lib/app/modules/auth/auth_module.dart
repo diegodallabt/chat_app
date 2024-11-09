@@ -49,7 +49,7 @@ class AuthModule extends Module {
     r.child(
       '/',
       child: (context) => AuthPage(
-        loginBloc: context.read<AuthBloc>(),
+        authBloc: context.read<AuthBloc>(),
       ),
       customTransition: instantTransition,
     );

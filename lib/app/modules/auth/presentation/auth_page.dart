@@ -7,9 +7,9 @@ import 'widgets/login_button.dart';
 import 'widgets/register_button.dart';
 
 class AuthPage extends StatefulWidget {
-  final AuthBloc loginBloc;
+  final AuthBloc authBloc;
 
-  const AuthPage({super.key, required this.loginBloc});
+  const AuthPage({super.key, required this.authBloc});
 
   @override
   AuthPageState createState() => AuthPageState();
@@ -29,7 +29,7 @@ class AuthPageState extends State<AuthPage> {
   void initState() {
     super.initState();
 
-    widget.loginBloc.state.listen((state) {
+    widget.authBloc.state.listen((state) {
       if (state is AuthSuccess) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Login Successful!')));
@@ -46,7 +46,7 @@ class AuthPageState extends State<AuthPage> {
     passwordLoginController.dispose();
     emailRegisterController.dispose();
     passwordRegisterController.dispose();
-    widget.loginBloc.dispose();
+    widget.authBloc.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -187,7 +187,7 @@ class AuthPageState extends State<AuthPage> {
         ),
         const SizedBox(height: 16),
         StreamBuilder<AuthState>(
-          stream: widget.loginBloc.state,
+          stream: widget.authBloc.state,
           initialData: AuthInitial(),
           builder: (context, snapshot) {
             final isLoading = snapshot.data is AuthLoading;
@@ -201,7 +201,7 @@ class AuthPageState extends State<AuthPage> {
                   final email = emailLoginController.text;
                   final password = passwordLoginController.text;
 
-                  widget.loginBloc.eventSink.add(LoginButtonPressed(
+                  widget.authBloc.eventSink.add(LoginButtonPressed(
                     email: email,
                     password: password,
                   ));
@@ -252,7 +252,15 @@ class AuthPageState extends State<AuthPage> {
           child: RegisterButton(
             backgroundColor: const Color.fromARGB(255, 44, 192, 163),
             padding: const EdgeInsets.symmetric(vertical: 17.0),
-            onPressed: () {},
+            onPressed: () {
+              final email = emailRegisterController.text;
+              final password = passwordRegisterController.text;
+
+              widget.authBloc.eventSink.add(RegisterButtonPressed(
+                email: email,
+                password: password,
+              ));
+            },
           ),
         ),
       ],
