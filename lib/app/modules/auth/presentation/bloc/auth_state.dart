@@ -6,10 +6,16 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
-class AuthSuccess extends AuthState {
+class AuthLoginSuccess extends AuthState {
   final User user;
 
-  AuthSuccess({required this.user});
+  AuthLoginSuccess({required this.user});
+}
+
+class AuthRegisterSuccess extends AuthState {
+  final User user;
+
+  AuthRegisterSuccess({required this.user});
 }
 
 class AuthFailure extends AuthState {

@@ -20,10 +20,10 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   }
 
   @override
-  Future<User?> register(String email, String password) async {
+  Future<User?> register(String email, String password, String name) async {
     try {
-      final user = await _firebaseAuthDataSource.signInWithEmailAndPassword(
-          email, password);
+      final user = await _firebaseAuthDataSource.createUserWithEmailAndPassword(
+          email, password, name);
 
       return user;
     } catch (e) {

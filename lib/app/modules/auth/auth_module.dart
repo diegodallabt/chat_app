@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -16,9 +17,12 @@ class AuthModule extends Module {
     // FirebaseAuth instance
     i.addSingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
+    i.addSingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+
     // DataSource
     i.addSingleton<FirebaseAuthDataSource>(
-      () => FirebaseAuthDataSourceImpl(i.get<FirebaseAuth>()),
+      () => FirebaseAuthDataSourceImpl(
+          i.get<FirebaseAuth>(), i.get<FirebaseFirestore>()),
     );
 
     // Repository

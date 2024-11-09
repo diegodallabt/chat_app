@@ -10,8 +10,10 @@ class LoginButtonPressed extends AuthEvent {
 class RegisterButtonPressed extends AuthEvent {
   final String email;
   final String password;
+  final String name;
 
-  RegisterButtonPressed({required this.email, required this.password});
+  RegisterButtonPressed(
+      {required this.email, required this.password, required this.name});
 }
 
 class ToggleTab extends AuthEvent {

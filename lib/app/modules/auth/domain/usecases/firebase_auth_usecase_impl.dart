@@ -1,3 +1,4 @@
+import 'package:bcrypt/bcrypt.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../repositories/firebase_auth_repository.dart';
@@ -19,9 +20,10 @@ class FirebaseAuthUseCaseImpl implements FirebaseAuthUseCase {
   }
 
   @override
-  Future<User?> register(String email, String password) async {
+  Future<User?> register(String email, String password, String name) async {
     try {
-      final user = await _firebaseAuthRepository.register(email, password);
+      final user = await _firebaseAuthRepository.register(
+          email, BCrypt.hashpw(password, BCrypt.gensalt()), name);
       return user;
     } catch (e) {
       rethrow;

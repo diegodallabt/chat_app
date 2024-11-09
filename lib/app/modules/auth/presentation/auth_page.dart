@@ -21,6 +21,7 @@ class AuthPageState extends State<AuthPage> {
   final TextEditingController passwordLoginController = TextEditingController();
   final TextEditingController passwordRegisterController =
       TextEditingController();
+  final TextEditingController nameRegisterController = TextEditingController();
   final PageController _pageController = PageController();
 
   bool isLoginSelected = true;
@@ -30,9 +31,16 @@ class AuthPageState extends State<AuthPage> {
     super.initState();
 
     widget.authBloc.state.listen((state) {
-      if (state is AuthSuccess) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Login Successful!')));
+      if (state is AuthLoginSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Login Successful!'),
+          backgroundColor: Colors.green,
+        ));
+      } else if (state is AuthRegisterSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Register Successful!'),
+          backgroundColor: Colors.blue,
+        ));
       } else if (state is AuthFailure) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(state.error)));
@@ -232,7 +240,7 @@ class AuthPageState extends State<AuthPage> {
         ),
         const SizedBox(height: 26),
         CustomTextField(
-          controller: TextEditingController(),
+          controller: nameRegisterController,
           labelText: 'Nome',
         ),
         const SizedBox(height: 16),
@@ -255,11 +263,10 @@ class AuthPageState extends State<AuthPage> {
             onPressed: () {
               final email = emailRegisterController.text;
               final password = passwordRegisterController.text;
+              final name = nameRegisterController.text;
 
               widget.authBloc.eventSink.add(RegisterButtonPressed(
-                email: email,
-                password: password,
-              ));
+                  email: email, password: password, name: name));
             },
           ),
         ),

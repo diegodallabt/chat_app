@@ -24,7 +24,7 @@ class AuthBloc {
 
       try {
         final user = await authUseCase.login(event.email, event.password);
-        _stateController.add(AuthSuccess(user: user!));
+        _stateController.add(AuthLoginSuccess(user: user!));
       } catch (e) {
         _stateController.add(AuthFailure(error: e.toString()));
       }
@@ -32,8 +32,9 @@ class AuthBloc {
       _stateController.add(AuthLoading());
 
       try {
-        final user = await authUseCase.register(event.email, event.password);
-        _stateController.add(AuthSuccess(user: user!));
+        final user =
+            await authUseCase.register(event.email, event.password, event.name);
+        _stateController.add(AuthRegisterSuccess(user: user!));
       } catch (e) {
         _stateController.add(AuthFailure(error: e.toString()));
       }
